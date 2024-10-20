@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!--Title Block-->
+{% block title %}
+<title>Home</title>
+{% endblock %}
+
+<!--Content Block-->
+{% block content %}
+<!--Hero Section-->
+<section style="display: flex; justify-content: space-evenly; align-items: center" class="my-5">
+    <div style="max-width: 40%">
+        <img src="https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="rounded-4">
+    </div>
+    <div style="max-width: 40%">
+        <h1>This is Hero Section</h1>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    </div>
+</section>
+
+<!--List of Cars-->
+<h1 class="text-center mt-5">Car List</h1>
+
+<!--Filter by Brand-->
+<section class="mx-5 d-flex flex-wrap gap-3">
+    <h3>Filter by Brand: </h3>
+    <div class="form-check">
+          <p class="form-check-label">
+              <a href="{% url 'homepage' %}" style="text-decoration: none">All Brands</a>
+          </p>
+    </div>
+    {% for brand in brands %}
+        <div class="form-check">
+          <p class="form-check-label">
+              <a href="{% url 'brand_wise_car' brand.brand_name %}" style="text-decoration: none">{{brand.brand_name}}</a>
+          </p>
+        </div>
+    {% endfor %}
+</section>
+<h3 class="mx-5 mb-5"> Total Cars: {{data | length}}</h3>
+<section class="d-flex flex-wrap justify-content-center gap-5 mb-5">
+    {% for car in data %}
+        <div class="card" style="width: 18rem;">
+          <img src={{car.car_img.url}} class="card-img-top" alt="{{car.car_img.url}}">
+              <div class="card-body">
+                <h5 class="card-title">{{car.car_name}}</h5>
+                <p class="card-text"> <strong>Price:</strong> {{car.car_price}}</p>
+                <p class="card-text"> <strong>Brand:</strong> {{car.brand_name}}</p>
+                <a href="{% url 'car_details' car.id %}" class="card-link">View Details</a>
+              </div>
+        </div>
+    {% endfor %}
+</section>
+
+
+
+{% endblock %}

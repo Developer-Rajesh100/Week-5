@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+<!--Title Block-->
+{% block title %}
+<title>Car Details</title>
+{% endblock %}
+
+<!--Content Block-->
+{% block content %}
+
+<!--Car Details Section-->
+<section style="width: 50%; margin: auto" class="my-5 shadow-lg">
+    <div class="card mb-3">
+      <img src={{car.car_img.url}} style="" class="card-img-top" alt="...">
+      <div class="card-body">
+          <h5 class="card-title">{{car.car_name}}</h5>
+          <p class="card-text">{{car.car_description}}</p>
+          <div class="d-flex align-items-center justify-content-between">
+              <div>
+                    <p class="card-text"> <strong>Price:</strong> {{car.car_price}}</p>
+                    <p class="card-text"> <strong>Quantity:</strong> {{car.car_quantity}}</p>
+              </div>
+              {% if request.user.is_authenticated %}
+              <div>
+                  <a href="{% url 'buy_now' car.id %}" class="btn btn-warning px-5">Buy Now</a>
+              </div>
+              {% endif %}
+          </div>
+          <p class="card-text text-center"><small class="text-body-secondary">{{car.brand_name}}</small></p>
+      </div>
+    </div>
+</section>
+
+<div style="width: 50%; margin: auto" class="border border p-5 shadow-lg rounded-2 my-5">
+    <h5 class="mb-3">Total Comments: {{comments | length}}</h5>
+    {% for comment in comments %}
+        <div class="card my-3">
+          <div class="card-body">
+              <div style="display: flex; justify-content: space-between">
+                <p><strong>{{comment.name}}</strong></p>
+                <p><small>{{comment.created_on}}</small></p>
+              </div>
+            <p>{{comment.comment}}</p>
+          </div>
+        </div>
+    {% endfor %}
+</div>
+
+<form method="post" style="width: 50%; margin: auto" class="border border p-5 shadow-lg rounded-2 my-5">
+    {% csrf_token %}
+    <h1 class="text-center mb-3">Add Comment</h1>
+    {{comment_form | crispy}}
+    <input type="submit" value="Submit Comment" style="width: 100%" class="btn btn-outline-info">
+</form>
+
+
+{% endblock %}

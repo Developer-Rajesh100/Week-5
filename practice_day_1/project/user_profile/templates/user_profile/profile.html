@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+<!--Title-->
+{% block title %}
+<title>Profile</title>
+{% endblock %}
+
+<!--Content Block-->
+{% block content %}
+  <div class="mt-5 text-center">
+    <a class="btn btn-warning mx-2" href="{% url 'password_change_with_old_password' %}"> Change Password using old Password </a>
+    <a class="btn btn-warning mx-2"> Change Password without old Password </a>
+  </div>
+  <h1 class="text-center mt-3">Hi, {{request.user.first_name}}</h1>
+{% endblock %}

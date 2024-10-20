@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+<!--Title Block-->
+{% block title %}
+<title>Profile</title>
+{% endblock %}
+
+<!--Content Block-->
+{% block content %}
+<div class="d-flex justify-content-center align-items-center my-5 gap-5">
+<h3 class="text-center mt-4">Hello, {{request.user.first_name}}</h3>
+    <a href="{% url 'update' %}">
+        <button type="button" class="btn btn-info text-white">Update User</button>
+    </a>
+</div>
+
+<!--Orders History-->
+<h1 class="text-center mb-4">Your Orders</h1>
+<section style="display: flex; justify-content: center; flex-wrap: wrap" class="gap-5">
+    {% for car in data %}
+        <div class="card mb-3" style="width: 80vh">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src={{car.car_img.url}} style="width: 100%; height: 100%" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{car.car_name}}</h5>
+                <p class="card-text">{{car.car_description | truncatewords:7}}</p>
+                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+
+</section>
+
+{% endblock %}
